@@ -1,0 +1,6 @@
+matplotlib
+jupyter
+imageio
+torch
+pygame
+scipy
