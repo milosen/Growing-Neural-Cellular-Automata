@@ -1,4 +1,6 @@
 import os
+import sys
+
 import pygame
 import torch
 import numpy as np
@@ -15,7 +17,7 @@ pix_size = 8
 _map_shape = (72,72)
 CHANNEL_N = 16
 CELL_FIRE_RATE = 0.5
-model_path = "models/neurds_logo_1.pth"
+model_path = sys.argv[1]
 device = torch.device("cpu")
 
 _rows = np.arange(_map_shape[0]).repeat(_map_shape[1]).reshape([_map_shape[0],_map_shape[1]])

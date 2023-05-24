@@ -42,9 +42,12 @@ def make_seeds(shape, n_channels, n=1):
     x[:, shape[0]//2, shape[1]//2, 3:] = 1.0
     return x
 
-def make_seed(shape, n_channels):
+def make_seed(shape, n_channels, seed_side=True):
     seed = np.zeros([shape[0], shape[1], n_channels], np.float32)
-    seed[shape[0]//2, shape[1]//2, 3:] = 1.0
+    if not seed_side:
+        seed[shape[0]//2, shape[1]//2, 3:] = 1.0
+    else:
+        seed[shape[0] // 2, int(shape[1] // (3/2)), 3:] = 1.0
     return seed
 
 def make_circle_masks(n, h, w):
