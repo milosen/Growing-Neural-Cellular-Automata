@@ -1,6 +1,7 @@
 import pygame
 import numpy as np
 
+
 class displayer:
 
     def __init__(self, _map_shape, pix_size, has_gap=False):
@@ -30,7 +31,8 @@ class displayer:
                 else:
                     size = self.pix_size
                 s = pygame.Surface((size,size))
-                c = (_map[i,j]*256).astype(int)[:3]
+                c = (_map[i, j]*256).astype(int)[:3]
                 s.fill(c)
                 self.screen.blit(s, (x-int(size/2), y-int(size/2)))
+
         pygame.display.update()

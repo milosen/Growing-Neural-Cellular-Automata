@@ -4,6 +4,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 
+
 class CAModel(nn.Module):
     def __init__(self, channel_n, fire_rate, device, hidden_size=128):
         super(CAModel, self).__init__()
@@ -46,14 +47,15 @@ class CAModel(nn.Module):
         pre_life_mask = self.alive(x)
 
         dx = self.perceive(x, angle)
-        dx = dx.transpose(1,3)
+        dx = dx.transpose(1, 3)
         dx = self.fc0(dx)
         dx = F.relu(dx)
         dx = self.fc1(dx)
 
         if fire_rate is None:
-            fire_rate=self.fire_rate
-        stochastic = torch.rand([dx.size(0),dx.size(1),dx.size(2),1])>fire_rate
+            fire_rate = self.fire_rate
+
+        stochastic = torch.rand([dx.size(0),dx.size(1), dx.size(2), 1]) > fire_rate
         stochastic = stochastic.float().to(self.device)
         dx = dx * stochastic
 
@@ -62,7 +64,7 @@ class CAModel(nn.Module):
         post_life_mask = self.alive(x)
         life_mask = (pre_life_mask & post_life_mask).float()
         x = x * life_mask
-        return x.transpose(1,3)
+        return x.transpose(1, 3)
 
     def forward(self, x, steps=1, fire_rate=None, angle=0.0):
         for step in range(steps):
